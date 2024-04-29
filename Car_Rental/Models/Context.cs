@@ -10,6 +10,7 @@ namespace Car_Rental.Models
         public DbSet<Rental> rental { set; get; }
         public DbSet<Payment> payments { set; get; }
         public DbSet<Comments> comments { set; get; }
+        public DbSet<ApplicationUser>applicationUsers { set; get; }
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
