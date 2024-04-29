@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Car_Rental.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Car_Rental.Models
 {
-    public class Car
+    public class Car: ISoftDeletable
     {
-        public int Car_Id { get; set; }
+        public int Id { get; set; }
         public string? Model { get; set; }
         public string Make { get; set; }
         public int Year { get; set; }
@@ -19,5 +20,9 @@ namespace Car_Rental.Models
 
         public ICollection<Rental>? rentals { set; get; }
         public ICollection<Maintenance>? maintenances { set; get; }
+        public List<Comments>? comments { get; set; }
+        public bool IsDeleted { get; set; } = false;
+
+
     }
 }
