@@ -9,6 +9,7 @@ namespace Car_Rental.Models
         public DbSet<Maintenance> maintenance { set; get; }
         public DbSet<Rental> rental { set; get; }
         public DbSet<Payment> payments { set; get; }
+        public DbSet<Comments> comments { set; get; }
 
         public Context(DbContextOptions<Context> options) : base(options)
         {

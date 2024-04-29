@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Car_Rental.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Car_Rental.Models
 {
-    public class Maintenance
+    public class Maintenance: ISoftDeletable
     {
         public int Id { get; set; }
         public string Type { get; set; }
@@ -13,5 +14,7 @@ namespace Car_Rental.Models
         [ForeignKey("car")]
         public int Car_Id { set; get; }
         public Car car { set; get; }
+        public bool IsDeleted { get; set; } = false;
+
     }
 }
