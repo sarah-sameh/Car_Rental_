@@ -1,6 +1,8 @@
-﻿namespace Car_Rental.Repository
+﻿using Car_Rental.Interfaces;
+
+namespace Car_Rental.Repository
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class,ISoftDeletable
     {
          public List<T> getAll();
         public T get(int id);
