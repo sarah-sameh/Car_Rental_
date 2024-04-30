@@ -1,24 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Car_Rental.Models
 {
-    public class Context : DbContext
+    public class Context : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Car> car { set; get; }
-        public DbSet<Location> location { set; get; }
-        public DbSet<Maintenance> maintenance { set; get; }
-        public DbSet<Rental> rental { set; get; }
-        public DbSet<Payment> payments { set; get; }
-        public DbSet<Comments> comments { set; get; }
-        public DbSet<ApplicationUser>applicationUsers { set; get; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Maintenance> Maintenance { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Comments> Comments { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
 
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(p => new { p.LoginProvider, p.ProviderKey });
         }
     }
 }
