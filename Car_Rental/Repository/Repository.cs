@@ -54,7 +54,10 @@ namespace Car_Rental.Repository
             _context.Set<T>().Add(item);
         }
 
-
+        public int save()
+        {
+            return _context.SaveChanges();
+        }
 
     }
 }

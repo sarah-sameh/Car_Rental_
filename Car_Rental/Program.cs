@@ -1,5 +1,6 @@
 
 using Car_Rental.Models;
+using Car_Rental.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,7 @@ namespace Car_Rental
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
             var app = builder.Build();
 
