@@ -97,6 +97,98 @@ namespace Car_Rental.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "763c3a4f-5385-4add-85df-235769423f0b",
+                            AccessFailedCount = 0,
+                            Address = "egypt",
+                            ConcurrencyStamp = "fec63ef4-cea8-47bd-b7af-c6f6af4b648d",
+                            Email = "user1@example.com",
+                            EmailConfirmed = false,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            Name = "John",
+                            PasswordHash = "Doe",
+                            PhoneNumber = "+1-555-1234",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e34b1308-4b1d-47a3-80e0-f6d143d5205e",
+                            TwoFactorEnabled = false,
+                            UserName = "user1@example.com"
+                        },
+                        new
+                        {
+                            Id = "45e9e4fc-f069-4f6c-8dd1-5b8d70c13b88",
+                            AccessFailedCount = 0,
+                            Address = "egypt",
+                            ConcurrencyStamp = "9f7fc80e-403a-41a7-8eb6-68a46baa6660",
+                            Email = "user2@example.com",
+                            EmailConfirmed = false,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            Name = "Jane",
+                            PasswordHash = "Doe",
+                            PhoneNumber = "+1-555-5678",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d39f74af-da93-4a41-b8f2-d085dc959985",
+                            TwoFactorEnabled = false,
+                            UserName = "user2@example.com"
+                        },
+                        new
+                        {
+                            Id = "951dea63-2558-4af0-99d6-e708717aa89a",
+                            AccessFailedCount = 0,
+                            Address = "egypt",
+                            ConcurrencyStamp = "24e066d0-bf03-4cd1-b3eb-b84440e3168e",
+                            Email = "user3@example.com",
+                            EmailConfirmed = false,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            Name = "Michael",
+                            PasswordHash = "Smith",
+                            PhoneNumber = "+1-555-9012",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "b517848a-f6d4-4a54-8d61-f34ee739974c",
+                            TwoFactorEnabled = false,
+                            UserName = "user3@example.com"
+                        },
+                        new
+                        {
+                            Id = "ff28fd4d-90c6-47c8-a755-d312f7793823",
+                            AccessFailedCount = 0,
+                            Address = "egypt",
+                            ConcurrencyStamp = "719b9fc3-814b-46b0-909a-e8503c5b4ea8",
+                            Email = "user4@example.com",
+                            EmailConfirmed = false,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            Name = "Emily",
+                            PasswordHash = "Johnson",
+                            PhoneNumber = "+1-555-3456",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6c6e70fe-1088-4b56-9652-e77953870a6b",
+                            TwoFactorEnabled = false,
+                            UserName = "user4@example.com"
+                        },
+                        new
+                        {
+                            Id = "566f46a8-60cc-4fe7-95dc-75f37bc493da",
+                            AccessFailedCount = 0,
+                            Address = "egypt",
+                            ConcurrencyStamp = "ff15a5d4-db11-46d9-898e-32dab57229a1",
+                            Email = "user5@example.com",
+                            EmailConfirmed = false,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            Name = "Brown",
+                            PasswordHash = "William",
+                            PhoneNumber = "+1-555-7890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "10906e68-5152-4ae6-87ca-29b60e9a193e",
+                            TwoFactorEnabled = false,
+                            UserName = "user5@example.com"
+                        });
                 });
 
             modelBuilder.Entity("Car_Rental.Models.Car", b =>
@@ -139,6 +231,32 @@ namespace Car_Rental.Migrations
                     b.HasIndex("Location_Id");
 
                     b.ToTable("Cars");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FuelType = "Gasoline",
+                            Image = "camry.jpg",
+                            IsAvailable = true,
+                            IsDeleted = false,
+                            Location_Id = 1,
+                            Make = "Toyota",
+                            Model = "Camry",
+                            Year = 2020
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FuelType = "Gasoline",
+                            Image = "accord.jpg",
+                            IsAvailable = true,
+                            IsDeleted = false,
+                            Location_Id = 2,
+                            Make = "Honda",
+                            Model = "Accord",
+                            Year = 2019
+                        });
                 });
 
             modelBuilder.Entity("Car_Rental.Models.Comments", b =>
@@ -195,6 +313,20 @@ namespace Car_Rental.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Locations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsDeleted = false,
+                            Name = "Location 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDeleted = false,
+                            Name = "Location 2"
+                        });
                 });
 
             modelBuilder.Entity("Car_Rental.Models.Maintenance", b =>

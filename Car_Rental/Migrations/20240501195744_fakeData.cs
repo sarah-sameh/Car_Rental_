@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Car_Rental.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class fakeData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -306,6 +308,36 @@ namespace Car_Rental.Migrations
                         principalTable: "Cars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsDeleted", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "45e9e4fc-f069-4f6c-8dd1-5b8d70c13b88", 0, "egypt", "9f7fc80e-403a-41a7-8eb6-68a46baa6660", "user2@example.com", false, false, false, null, "Jane", null, null, "Doe", "+1-555-5678", false, "d39f74af-da93-4a41-b8f2-d085dc959985", false, "user2@example.com" },
+                    { "566f46a8-60cc-4fe7-95dc-75f37bc493da", 0, "egypt", "ff15a5d4-db11-46d9-898e-32dab57229a1", "user5@example.com", false, false, false, null, "Brown", null, null, "William", "+1-555-7890", false, "10906e68-5152-4ae6-87ca-29b60e9a193e", false, "user5@example.com" },
+                    { "763c3a4f-5385-4add-85df-235769423f0b", 0, "egypt", "fec63ef4-cea8-47bd-b7af-c6f6af4b648d", "user1@example.com", false, false, false, null, "John", null, null, "Doe", "+1-555-1234", false, "e34b1308-4b1d-47a3-80e0-f6d143d5205e", false, "user1@example.com" },
+                    { "951dea63-2558-4af0-99d6-e708717aa89a", 0, "egypt", "24e066d0-bf03-4cd1-b3eb-b84440e3168e", "user3@example.com", false, false, false, null, "Michael", null, null, "Smith", "+1-555-9012", false, "b517848a-f6d4-4a54-8d61-f34ee739974c", false, "user3@example.com" },
+                    { "ff28fd4d-90c6-47c8-a755-d312f7793823", 0, "egypt", "719b9fc3-814b-46b0-909a-e8503c5b4ea8", "user4@example.com", false, false, false, null, "Emily", null, null, "Johnson", "+1-555-3456", false, "6c6e70fe-1088-4b56-9652-e77953870a6b", false, "user4@example.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "Id", "Address", "IsDeleted", "Name" },
+                values: new object[,]
+                {
+                    { 1, null, false, "Location 1" },
+                    { 2, null, false, "Location 2" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cars",
+                columns: new[] { "Id", "FuelType", "Image", "IsAvailable", "IsDeleted", "Location_Id", "Make", "Model", "Year" },
+                values: new object[,]
+                {
+                    { 1, "Gasoline", "camry.jpg", true, false, 1, "Toyota", "Camry", 2020 },
+                    { 2, "Gasoline", "accord.jpg", true, false, 2, "Honda", "Accord", 2019 }
                 });
 
             migrationBuilder.CreateIndex(
