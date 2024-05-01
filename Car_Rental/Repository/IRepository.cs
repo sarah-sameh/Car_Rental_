@@ -10,6 +10,5 @@ namespace Car_Rental.Repository
         public void Insert(T item);
 
         public void Update(T item);
-
     }
 }
