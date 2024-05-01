@@ -25,10 +25,20 @@ namespace Car_Rental.Controllers
         {
             List<Comments> comments = commentRepository.getAll().Where(i => i.IsDeleted == false).ToList();
 
+
+            List<commentDTO> commentDTOs = comments.Select(c => new commentDTO
+            {
+                Text = c.Text,
+              Rating = c.Rating,
+              CarId = c.CarId,
+              userId=c.userId,
+              IsDeleted = c.IsDeleted,  
+            }).ToList();
+
             GeneralResponse response = new GeneralResponse()
             {
                 IsPass = true,
-                Message =comments
+                Message =commentDTOs
             };
 
             return response;
@@ -54,16 +64,17 @@ namespace Car_Rental.Controllers
 
 
         [HttpPut("{id:int}")]
-        public ActionResult<GeneralResponse> update(int id,Comments newComment)
+        public ActionResult<GeneralResponse> Update(int id,updateCommentDTO newComment)
         {
 
             Comments comments=commentRepository.get(id);
+            
             if (comments == null)
             {
                 GeneralResponse generalResponse = new GeneralResponse()
                 {
                     IsPass = false,
-                    Message = comments
+                    Message = "couldn't find this comment"
                 };
                 return generalResponse;
             }
@@ -99,6 +110,31 @@ namespace Car_Rental.Controllers
 
             }
             return BadRequest(ModelState);
+        }
+
+
+        [HttpGet("{id:guid}")]
+        public ActionResult<GeneralResponse>GetByUserId(string id)
+        {
+            List<Comments> comments = commentRepository.getByUserID(id).Where(i => i.IsDeleted == false).ToList();
+
+
+            List<commentDTO> commentDTOs = comments.Select(c => new commentDTO
+            {
+                Text = c.Text,
+                Rating = c.Rating,
+                CarId = c.CarId,
+                userId = c.userId,
+                IsDeleted = c.IsDeleted,
+            }).ToList();
+
+            GeneralResponse response = new GeneralResponse()
+            {
+                IsPass = true,
+                Message = commentDTOs
+            };
+
+            return response;
         }
     }
 
