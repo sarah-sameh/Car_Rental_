@@ -2,7 +2,9 @@
 
 namespace Car_Rental.Repository
 {
-    public interface IPaymentRepository:IRepository<Payment>
+    public interface IPaymentRepository : IRepository<Payment>
     {
+        public List<Payment> getByUserID(string userId);
+
     }
 }

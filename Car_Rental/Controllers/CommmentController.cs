@@ -1,11 +1,7 @@
 ﻿using Car_Rental.DTOs;
 using Car_Rental.Models;
 using Car_Rental.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace Car_Rental.Controllers
 {
@@ -29,16 +25,16 @@ namespace Car_Rental.Controllers
             List<commentDTO> commentDTOs = comments.Select(c => new commentDTO
             {
                 Text = c.Text,
-              Rating = c.Rating,
-              CarId = c.CarId,
-              userId=c.userId,
-              IsDeleted = c.IsDeleted,  
+                Rating = c.Rating,
+                CarId = c.CarId,
+                userId = c.userId,
+                IsDeleted = c.IsDeleted,
             }).ToList();
 
             GeneralResponse response = new GeneralResponse()
             {
                 IsPass = true,
-                Message =commentDTOs
+                Message = commentDTOs
             };
 
             return response;
@@ -48,7 +44,7 @@ namespace Car_Rental.Controllers
         public ActionResult<GeneralResponse> Delete(int id)
         {
 
-        Comments comments=commentRepository.get(id);
+            Comments comments = commentRepository.get(id);
             commentRepository.delete(id);
             GeneralResponse response = new GeneralResponse()
             {
@@ -64,11 +60,11 @@ namespace Car_Rental.Controllers
 
 
         [HttpPut("{id:int}")]
-        public ActionResult<GeneralResponse> Update(int id,updateCommentDTO newComment)
+        public ActionResult<GeneralResponse> Update(int id, updateCommentDTO newComment)
         {
 
-            Comments comments=commentRepository.get(id);
-            
+            Comments comments = commentRepository.get(id);
+
             if (comments == null)
             {
                 GeneralResponse generalResponse = new GeneralResponse()
@@ -83,26 +79,26 @@ namespace Car_Rental.Controllers
 
             GeneralResponse response = new GeneralResponse()
             {
-                IsPass=true,
-                Message=newComment
+                IsPass = true,
+                Message = newComment
             };
-            return response;    
+            return response;
         }
 
 
         [HttpPost]
-        public ActionResult<GeneralResponse>Insert(commentDTO commentDto)
+        public ActionResult<GeneralResponse> Insert(commentDTO commentDto)
         {
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 Comments comments = new Comments();
 
                 comments.Text = commentDto.Text;
                 comments.Rating = commentDto.Rating;
-               comments.IsDeleted = commentDto.IsDeleted;
+                comments.IsDeleted = commentDto.IsDeleted;
                 comments.userId = commentDto.userId;
-                comments.CarId=commentDto.CarId;
+                comments.CarId = commentDto.CarId;
                 commentRepository.Insert(comments);
                 commentRepository.save();
 
@@ -114,7 +110,7 @@ namespace Car_Rental.Controllers
 
 
         [HttpGet("{id:guid}")]
-        public ActionResult<GeneralResponse>GetByUserId(string id)
+        public ActionResult<GeneralResponse> GetByUserId(string id)
         {
             List<Comments> comments = commentRepository.getByUserID(id).Where(i => i.IsDeleted == false).ToList();
 
