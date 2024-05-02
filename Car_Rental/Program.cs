@@ -33,6 +33,7 @@ namespace Car_Rental
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+            builder.Services.AddScoped<IRentalRepository, RentalRepository>();
             builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
             builder.Services.AddScoped<IcarRepository, CarRepository>();
             builder.Services.AddScoped<IMaintenanceRepository, MaintenanceRepository>();
