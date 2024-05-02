@@ -19,6 +19,71 @@ namespace Car_Rental.Controllers
             _carRepository = carRepository;
         }
 
+
+
+        [HttpGet]
+        public ActionResult<GeneralResponse> GetAll()
+        {
+            List<Car> cars = _carRepository.getAll().Where(car => !car.IsDeleted).ToList();
+
+            List<CarDTO> carDTOs = cars.Select(car => new CarDTO
+            {
+                Id = car.Id,
+                Model = car.Model,
+                Make = car.Make,
+                Year = car.Year,
+                FuelType = car.FuelType,
+                IsAvailable = car.IsAvailable,
+                Image = car.Image,
+                LocationId = car.Location_Id
+            }).ToList();
+
+            GeneralResponse response = new GeneralResponse()
+            {
+                IsPass = true,
+                Message = carDTOs
+            };
+
+            return response;
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<GeneralResponse> GetById(int id)
+        {
+            Car car = _carRepository.get(id);
+
+            if (car == null || car.IsDeleted)
+            {
+                GeneralResponse generalResponse = new GeneralResponse()
+                {
+                    IsPass = false,
+                    Message = "Car not found."
+                };
+                return NotFound(generalResponse);
+            }
+
+            CarDTO carDTO = new CarDTO
+            {
+                Id = car.Id,
+                Model = car.Model,
+                Make = car.Make,
+                Year = car.Year,
+                FuelType = car.FuelType,
+                IsAvailable = car.IsAvailable,
+                Image = car.Image,
+                LocationId = car.Location_Id
+            };
+
+            GeneralResponse response = new GeneralResponse()
+            {
+                IsPass = true,
+                Message = carDTO
+            };
+            return response;
+        }
+
+
+
         [HttpGet("{id:guid}")]
         public ActionResult<GeneralResponse> GetCarsByUserId(string userId)
         {
@@ -49,34 +114,6 @@ namespace Car_Rental.Controllers
 
             return response;
         }
-
-
-        [HttpGet]
-        public ActionResult<GeneralResponse> GetAll()
-        {
-            List<Car> cars = _carRepository.getAll().Where(car => !car.IsDeleted).ToList();
-
-            List<CarDTO> carDTOs = cars.Select(car => new CarDTO
-            {
-                Id = car.Id,
-                Model = car.Model,
-                Make = car.Make,
-                Year = car.Year,
-                FuelType = car.FuelType,
-                IsAvailable = car.IsAvailable,
-                Image = car.Image,
-                LocationId = car.Location_Id
-            }).ToList();
-
-            GeneralResponse response = new GeneralResponse()
-            {
-                IsPass = true,
-                Message = carDTOs
-            };
-
-            return response;
-        }
-
 
         [HttpPost]
         public ActionResult<GeneralResponse> Insert(CarDTO carDTO)
@@ -137,7 +174,7 @@ namespace Car_Rental.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public ActionResult<GeneralResponse> Delete(int id)
         {
 
