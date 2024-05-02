@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Car_Rental.Migrations
 {
     /// <inheritdoc />
-    public partial class fakeData : Migration
+    public partial class db : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -315,11 +315,11 @@ namespace Car_Rental.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsDeleted", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "45e9e4fc-f069-4f6c-8dd1-5b8d70c13b88", 0, "egypt", "9f7fc80e-403a-41a7-8eb6-68a46baa6660", "user2@example.com", false, false, false, null, "Jane", null, null, "Doe", "+1-555-5678", false, "d39f74af-da93-4a41-b8f2-d085dc959985", false, "user2@example.com" },
-                    { "566f46a8-60cc-4fe7-95dc-75f37bc493da", 0, "egypt", "ff15a5d4-db11-46d9-898e-32dab57229a1", "user5@example.com", false, false, false, null, "Brown", null, null, "William", "+1-555-7890", false, "10906e68-5152-4ae6-87ca-29b60e9a193e", false, "user5@example.com" },
-                    { "763c3a4f-5385-4add-85df-235769423f0b", 0, "egypt", "fec63ef4-cea8-47bd-b7af-c6f6af4b648d", "user1@example.com", false, false, false, null, "John", null, null, "Doe", "+1-555-1234", false, "e34b1308-4b1d-47a3-80e0-f6d143d5205e", false, "user1@example.com" },
-                    { "951dea63-2558-4af0-99d6-e708717aa89a", 0, "egypt", "24e066d0-bf03-4cd1-b3eb-b84440e3168e", "user3@example.com", false, false, false, null, "Michael", null, null, "Smith", "+1-555-9012", false, "b517848a-f6d4-4a54-8d61-f34ee739974c", false, "user3@example.com" },
-                    { "ff28fd4d-90c6-47c8-a755-d312f7793823", 0, "egypt", "719b9fc3-814b-46b0-909a-e8503c5b4ea8", "user4@example.com", false, false, false, null, "Emily", null, null, "Johnson", "+1-555-3456", false, "6c6e70fe-1088-4b56-9652-e77953870a6b", false, "user4@example.com" }
+                    { "46aa76e9-d8ae-4c22-81dc-04347c619868", 0, "egypt", "b525694a-526a-47c8-805e-b9911a4918fa", "user1@example.com", false, false, false, null, "John", null, null, "Doe", "+1-555-1234", false, "cbd69e43-1bc7-4469-a47b-dd8428d56823", false, "user1@example.com" },
+                    { "629c61df-aafe-446d-8395-d7c1dfb7ebaa", 0, "egypt", "06bd6b83-a2e3-4057-90fa-7815f1ec69df", "user3@example.com", false, false, false, null, "Michael", null, null, "Smith", "+1-555-9012", false, "840ef0fd-aa69-45f3-9a91-30c7669c0c4c", false, "user3@example.com" },
+                    { "6d67edd4-55fe-4cd3-bac7-3668339ea78d", 0, "egypt", "4f8134e5-2380-4541-a95e-a968bcfb7b17", "user2@example.com", false, false, false, null, "Jane", null, null, "Doe", "+1-555-5678", false, "b53a25ef-ee88-4691-880a-ae5ce4f1f26a", false, "user2@example.com" },
+                    { "c88b09af-8559-4ea3-95b1-3cbb01210a47", 0, "egypt", "8eb5b21c-b922-455a-9453-a54594251d2d", "user5@example.com", false, false, false, null, "Brown", null, null, "William", "+1-555-7890", false, "837459e9-5b66-45a2-9628-8556656dd809", false, "user5@example.com" },
+                    { "d85fd299-5eb8-49b0-8953-01e61017de6a", 0, "egypt", "b6dd2ba4-e302-4a32-a822-ec32e952dd5c", "user4@example.com", false, false, false, null, "Emily", null, null, "Johnson", "+1-555-3456", false, "4a00e3cc-e672-430a-94ab-fa7def803d5e", false, "user4@example.com" }
                 });
 
             migrationBuilder.InsertData(

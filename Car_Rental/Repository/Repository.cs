@@ -3,21 +3,22 @@ using Car_Rental.Models;
 
 namespace Car_Rental.Repository
 {
-    public class Repository<T>:IRepository<T> where T:class, ISoftDeletable
+    public class Repository<T> : IRepository<T> where T : class, ISoftDeletable
     {
 
-         protected  Context _context;
+        protected Context _context;
         public Repository(Context context)
         {
-          
+
             _context = context;
         }
 
-        public List<T> getAll() { 
-        
-        
-        
-        return _context.Set<T>().ToList();
+        public List<T> getAll()
+        {
+
+
+
+            return _context.Set<T>().ToList();
         }
 
 
@@ -27,16 +28,17 @@ namespace Car_Rental.Repository
 
         }
 
-        public void Update(T item) {
+        public void Update(T item)
+        {
 
-           
-          
-                
-                _context.Update(item);
-         
+
+
+
+            _context.Update(item);
+
         }
 
-        public void  delete(int id)
+        public void delete(int id)
         {
             T item = _context.Set<T>().Find(id);
 
@@ -45,7 +47,7 @@ namespace Car_Rental.Repository
                 item.IsDeleted = true;
                 Update(item);
             }
-            
+
         }
 
 
@@ -58,6 +60,7 @@ namespace Car_Rental.Repository
         {
             return _context.SaveChanges();
         }
+
 
     }
 }

@@ -22,6 +22,7 @@ namespace Car_Rental.Models
         public ICollection<Maintenance>? maintenances { set; get; }
         public List<Comments>? comments { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public string userId { get; set; }
 
 
     }

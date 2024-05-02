@@ -7,5 +7,10 @@ namespace Car_Rental.Repository
         public CarRepository(Context context) : base(context)
         {
         }
+        public List<Car> GetCarsByUserId(string userId)
+        {
+            List<Car> cars = _context.Cars.Where(c => c.userId == userId).ToList();
+            return cars;
+        }
     }
 }
