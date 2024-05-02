@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Car_Rental.Migrations
 {
     /// <inheritdoc />
-    public partial class db : Migration
+    public partial class fakedata : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -212,7 +212,8 @@ namespace Car_Rental.Migrations
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location_Id = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    userId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -315,11 +316,11 @@ namespace Car_Rental.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsDeleted", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "46aa76e9-d8ae-4c22-81dc-04347c619868", 0, "egypt", "b525694a-526a-47c8-805e-b9911a4918fa", "user1@example.com", false, false, false, null, "John", null, null, "Doe", "+1-555-1234", false, "cbd69e43-1bc7-4469-a47b-dd8428d56823", false, "user1@example.com" },
-                    { "629c61df-aafe-446d-8395-d7c1dfb7ebaa", 0, "egypt", "06bd6b83-a2e3-4057-90fa-7815f1ec69df", "user3@example.com", false, false, false, null, "Michael", null, null, "Smith", "+1-555-9012", false, "840ef0fd-aa69-45f3-9a91-30c7669c0c4c", false, "user3@example.com" },
-                    { "6d67edd4-55fe-4cd3-bac7-3668339ea78d", 0, "egypt", "4f8134e5-2380-4541-a95e-a968bcfb7b17", "user2@example.com", false, false, false, null, "Jane", null, null, "Doe", "+1-555-5678", false, "b53a25ef-ee88-4691-880a-ae5ce4f1f26a", false, "user2@example.com" },
-                    { "c88b09af-8559-4ea3-95b1-3cbb01210a47", 0, "egypt", "8eb5b21c-b922-455a-9453-a54594251d2d", "user5@example.com", false, false, false, null, "Brown", null, null, "William", "+1-555-7890", false, "837459e9-5b66-45a2-9628-8556656dd809", false, "user5@example.com" },
-                    { "d85fd299-5eb8-49b0-8953-01e61017de6a", 0, "egypt", "b6dd2ba4-e302-4a32-a822-ec32e952dd5c", "user4@example.com", false, false, false, null, "Emily", null, null, "Johnson", "+1-555-3456", false, "4a00e3cc-e672-430a-94ab-fa7def803d5e", false, "user4@example.com" }
+                    { "5b25fc7a-aee4-4194-9538-910d5e524f96", 0, "egypt", "d371c6da-8002-4615-8de2-a580ba70082f", "user4@example.com", false, false, false, null, "Emily", null, null, "Johnson", "+1-555-3456", false, "0e4b3039-72d0-4b1a-95e1-7063d8e3f83f", false, "user4@example.com" },
+                    { "714f79e8-3315-403c-a908-05251eeeab72", 0, "egypt", "9b28a06c-cf5a-459c-87ab-54cc3fc6c707", "user2@example.com", false, false, false, null, "Jane", null, null, "Doe", "+1-555-5678", false, "12f922d6-4d9e-44d7-b3e2-da655ece7835", false, "user2@example.com" },
+                    { "b31af383-db18-4f5a-982e-ce2d0124c59b", 0, "egypt", "3237ab2b-b4cb-41e8-9e57-c133e136fa64", "user5@example.com", false, false, false, null, "Brown", null, null, "William", "+1-555-7890", false, "5ffe076f-ef5b-494c-9f98-ad3b49e60e85", false, "user5@example.com" },
+                    { "d7c03867-15d9-4dcd-9853-7845af0bcdb4", 0, "egypt", "5393d6b5-710e-45a9-8bf6-92a9851b0174", "user1@example.com", false, false, false, null, "John", null, null, "Doe", "+1-555-1234", false, "a0573eef-4c39-4235-83ca-97ba7a928565", false, "user1@example.com" },
+                    { "f90bb19b-43c6-4f23-8a77-c784b6771935", 0, "egypt", "736d11ea-114f-417c-8456-91e06a4791d7", "user3@example.com", false, false, false, null, "Michael", null, null, "Smith", "+1-555-9012", false, "3224f74e-188a-4d31-8528-091a75c16801", false, "user3@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -333,11 +334,11 @@ namespace Car_Rental.Migrations
 
             migrationBuilder.InsertData(
                 table: "Cars",
-                columns: new[] { "Id", "FuelType", "Image", "IsAvailable", "IsDeleted", "Location_Id", "Make", "Model", "Year" },
+                columns: new[] { "Id", "FuelType", "Image", "IsAvailable", "IsDeleted", "Location_Id", "Make", "Model", "Year", "userId" },
                 values: new object[,]
                 {
-                    { 1, "Gasoline", "camry.jpg", true, false, 1, "Toyota", "Camry", 2020 },
-                    { 2, "Gasoline", "accord.jpg", true, false, 2, "Honda", "Accord", 2019 }
+                    { 1, "Gasoline", "camry.jpg", true, false, 1, "Toyota", "Camry", 2020, "566f46a8-60cc-4fe7-95dc-75f37bc493da" },
+                    { 2, "Gasoline", "accord.jpg", true, false, 2, "Honda", "Accord", 2019, "45e9e4fc-f069-4f6c-8dd1-c" }
                 });
 
             migrationBuilder.CreateIndex(
