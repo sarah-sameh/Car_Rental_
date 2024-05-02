@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Car_Rental.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240501225531_db")]
-    partial class db
+    [Migration("20240502070022_fakedata")]
+    partial class fakedata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,10 +104,10 @@ namespace Car_Rental.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "46aa76e9-d8ae-4c22-81dc-04347c619868",
+                            Id = "d7c03867-15d9-4dcd-9853-7845af0bcdb4",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "b525694a-526a-47c8-805e-b9911a4918fa",
+                            ConcurrencyStamp = "5393d6b5-710e-45a9-8bf6-92a9851b0174",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -116,16 +116,16 @@ namespace Car_Rental.Migrations
                             PasswordHash = "Doe",
                             PhoneNumber = "+1-555-1234",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cbd69e43-1bc7-4469-a47b-dd8428d56823",
+                            SecurityStamp = "a0573eef-4c39-4235-83ca-97ba7a928565",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
                         new
                         {
-                            Id = "6d67edd4-55fe-4cd3-bac7-3668339ea78d",
+                            Id = "714f79e8-3315-403c-a908-05251eeeab72",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "4f8134e5-2380-4541-a95e-a968bcfb7b17",
+                            ConcurrencyStamp = "9b28a06c-cf5a-459c-87ab-54cc3fc6c707",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -134,16 +134,16 @@ namespace Car_Rental.Migrations
                             PasswordHash = "Doe",
                             PhoneNumber = "+1-555-5678",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b53a25ef-ee88-4691-880a-ae5ce4f1f26a",
+                            SecurityStamp = "12f922d6-4d9e-44d7-b3e2-da655ece7835",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         },
                         new
                         {
-                            Id = "629c61df-aafe-446d-8395-d7c1dfb7ebaa",
+                            Id = "f90bb19b-43c6-4f23-8a77-c784b6771935",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "06bd6b83-a2e3-4057-90fa-7815f1ec69df",
+                            ConcurrencyStamp = "736d11ea-114f-417c-8456-91e06a4791d7",
                             Email = "user3@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -152,16 +152,16 @@ namespace Car_Rental.Migrations
                             PasswordHash = "Smith",
                             PhoneNumber = "+1-555-9012",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "840ef0fd-aa69-45f3-9a91-30c7669c0c4c",
+                            SecurityStamp = "3224f74e-188a-4d31-8528-091a75c16801",
                             TwoFactorEnabled = false,
                             UserName = "user3@example.com"
                         },
                         new
                         {
-                            Id = "d85fd299-5eb8-49b0-8953-01e61017de6a",
+                            Id = "5b25fc7a-aee4-4194-9538-910d5e524f96",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "b6dd2ba4-e302-4a32-a822-ec32e952dd5c",
+                            ConcurrencyStamp = "d371c6da-8002-4615-8de2-a580ba70082f",
                             Email = "user4@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -170,16 +170,16 @@ namespace Car_Rental.Migrations
                             PasswordHash = "Johnson",
                             PhoneNumber = "+1-555-3456",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4a00e3cc-e672-430a-94ab-fa7def803d5e",
+                            SecurityStamp = "0e4b3039-72d0-4b1a-95e1-7063d8e3f83f",
                             TwoFactorEnabled = false,
                             UserName = "user4@example.com"
                         },
                         new
                         {
-                            Id = "c88b09af-8559-4ea3-95b1-3cbb01210a47",
+                            Id = "b31af383-db18-4f5a-982e-ce2d0124c59b",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "8eb5b21c-b922-455a-9453-a54594251d2d",
+                            ConcurrencyStamp = "3237ab2b-b4cb-41e8-9e57-c133e136fa64",
                             Email = "user5@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -188,7 +188,7 @@ namespace Car_Rental.Migrations
                             PasswordHash = "William",
                             PhoneNumber = "+1-555-7890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "837459e9-5b66-45a2-9628-8556656dd809",
+                            SecurityStamp = "5ffe076f-ef5b-494c-9f98-ad3b49e60e85",
                             TwoFactorEnabled = false,
                             UserName = "user5@example.com"
                         });
@@ -229,6 +229,10 @@ namespace Car_Rental.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
+                    b.Property<string>("userId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Location_Id");
@@ -246,7 +250,8 @@ namespace Car_Rental.Migrations
                             Location_Id = 1,
                             Make = "Toyota",
                             Model = "Camry",
-                            Year = 2020
+                            Year = 2020,
+                            userId = "566f46a8-60cc-4fe7-95dc-75f37bc493da"
                         },
                         new
                         {
@@ -258,7 +263,8 @@ namespace Car_Rental.Migrations
                             Location_Id = 2,
                             Make = "Honda",
                             Model = "Accord",
-                            Year = 2019
+                            Year = 2019,
+                            userId = "45e9e4fc-f069-4f6c-8dd1-c"
                         });
                 });
 

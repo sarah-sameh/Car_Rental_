@@ -34,6 +34,8 @@ namespace Car_Rental
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+            builder.Services.AddScoped<IcarRepository, CarRepository>();
+            builder.Services.AddScoped<IMaintenanceRepository, MaintenanceRepository>();
 
             var app = builder.Build();
 

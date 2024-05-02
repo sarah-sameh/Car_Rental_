@@ -38,5 +38,78 @@ namespace Car_Rental.Controllers
           };  
             return generalResponse;
         }
+        [HttpPut("{id:int}")]
+        public ActionResult<GeneralResponse>Update(int id,MaintenanceDTO maintenanceDTO)
+        {
+            Maintenance maintenance = maintenanceRepository.get(id);
+
+           if (maintenance == null)
+            {
+
+                return new GeneralResponse()
+                {
+                    IsPass = false,
+                    Message = "wrong id"
+                };
+            }
+           maintenance.Cost = maintenanceDTO.Cost;
+            maintenance.Description = maintenanceDTO.Description;
+            maintenance.Type = maintenanceDTO.Type; 
+            maintenance.MaintenanceDate= maintenanceDTO.MaintenanceDate;
+
+            return new GeneralResponse()
+            {
+            IsPass=true,
+            Message=maintenanceDTO
+            };
+
+        }
+
+        [HttpDelete]
+        public ActionResult<GeneralResponse> Delete(int id)
+        {
+            Maintenance maintenance=maintenanceRepository.get(id);
+            if(maintenance == null)
+            {
+                return new GeneralResponse()
+                {
+                    IsPass = false,
+                    Message = "Invalid Id"
+                };
+            }
+
+            maintenanceRepository.delete(id);
+            return new GeneralResponse()
+            {
+                IsPass = true,
+                Message = "Deleted Successfully"
+            };
+
+        }
+
+        [HttpPost]
+public ActionResult<GeneralResponse>Insert(InsertMaintenanceDTO newMaintenance)
+        {
+            
+            Maintenance maintenance=new Maintenance();
+            maintenance.Cost=newMaintenance.Cost;
+            maintenance.Description=newMaintenance.Description;
+            maintenance.Type = newMaintenance.Type;
+            maintenance.Car_Id=newMaintenance.Car_Id;
+       maintenance.MaintenanceDate = newMaintenance.MaintenanceDate;
+
+            maintenanceRepository.Insert(maintenance);
+            maintenanceRepository.save();
+            return new GeneralResponse()
+            {
+                IsPass = true,
+                Message = newMaintenance
+            };
+
+
+
+        }
+    
+    
     }
 }
