@@ -1,5 +1,6 @@
 
 using Car_Rental.Models;
+using Car_Rental.MyHub;
 using Car_Rental.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,16 +19,28 @@ namespace Car_Rental
                 options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
             });
 
+          
+
+
+
+
+            //    )); 
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("MyPolicy",
-                                  policy => policy.AllowAnyMethod()
-                                  .AllowAnyOrigin()
-                                  .AllowAnyHeader());
+                    builder =>
+                    {
+                        builder.WithOrigins("http://127.0.0.1:5500")
+                               .AllowAnyMethod()
+                               .AllowAnyHeader()
+                               .AllowCredentials();
+                    });
             });
+
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
              .AddEntityFrameworkStores<Context>();
-
+            builder.Services.AddSignalR(
+            );
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -48,7 +61,7 @@ namespace Car_Rental
             }
             app.UseCors("MyPolicy");
             app.UseAuthorization();
-
+            app.MapHub<commentHub>("/commentHub");
 
             app.MapControllers();
 
