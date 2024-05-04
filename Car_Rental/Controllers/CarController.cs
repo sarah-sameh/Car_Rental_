@@ -8,8 +8,8 @@ using System.Xml.Linq;
 
 namespace Car_Rental.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class CarController : ControllerBase
     {
         private readonly IcarRepository _carRepository;
@@ -47,40 +47,40 @@ namespace Car_Rental.Controllers
             return response;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<GeneralResponse> GetById(int id)
-        {
-            Car car = _carRepository.get(id);
+        //[HttpGet("{id}")]
+        //public ActionResult<GeneralResponse> GetById(int id)
+        //{
+        //    Car car = _carRepository.get(id);
 
-            if (car == null || car.IsDeleted)
-            {
-                GeneralResponse generalResponse = new GeneralResponse()
-                {
-                    IsPass = false,
-                    Message = "Car not found."
-                };
-                return NotFound(generalResponse);
-            }
+        //    if (car == null || car.IsDeleted)
+        //    {
+        //        GeneralResponse generalResponse = new GeneralResponse()
+        //        {
+        //            IsPass = false,
+        //            Message = "Car not found."
+        //        };
+        //        return NotFound(generalResponse);
+        //    }
 
-            CarDTO carDTO = new CarDTO
-            {
-                Id = car.Id,
-                Model = car.Model,
-                Make = car.Make,
-                Year = car.Year,
-                FuelType = car.FuelType,
-                IsAvailable = car.IsAvailable,
-                Image = car.Image,
-                LocationId = car.Location_Id
-            };
+        //    CarDTO carDTO = new CarDTO
+        //    {
+        //        Id = car.Id,
+        //        Model = car.Model,
+        //        Make = car.Make,
+        //        Year = car.Year,
+        //        FuelType = car.FuelType,
+        //        IsAvailable = car.IsAvailable,
+        //        Image = car.Image,
+        //        LocationId = car.Location_Id
+        //    };
 
-            GeneralResponse response = new GeneralResponse()
-            {
-                IsPass = true,
-                Message = carDTO
-            };
-            return response;
-        }
+        //    GeneralResponse response = new GeneralResponse()
+        //    {
+        //        IsPass = true,
+        //        Message = carDTO
+        //    };
+        //    return response;
+        //}
 
 
 
