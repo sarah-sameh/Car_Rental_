@@ -191,5 +191,61 @@ namespace Car_Rental.Controllers
 
         }
 
+        [HttpGet("search")]
+        public ActionResult<GeneralResponse> SearchByModel(string model)
+        {
+            List<Car> cars = _carRepository.SearchByMode(model);
+
+            List<CarDTO> carDTOs = cars.Select(car => new CarDTO
+            {
+                Model = car.Model,
+                Make = car.Make,
+                Year = car.Year,
+                FuelType = car.FuelType,
+                IsAvailable = car.IsAvailable,
+                Image = car.Image,
+                LocationId = car.Location_Id
+            }).ToList();
+
+            return new GeneralResponse()
+            {
+                IsPass = true,
+                Message = carDTOs
+            };
+
+        }
+
+        [HttpGet("page")]
+        public ActionResult<GeneralResponse> GetAll(int page)
+        {
+            List<Car> cars = _carRepository.getAll().Where(car => !car.IsDeleted).ToList();
+            int pageSize = 10;
+            nint currentPage = page;
+            int totalCount = cars.Count;
+            int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            List<CarDTO> carDTO = cars.Skip((page - 1) * pageSize).Take(pageSize)
+                .Select(car => new CarDTO
+                {
+                    Model = car.Model,
+                    Make = car.Make,
+                    Year = car.Year,
+                    FuelType = car.FuelType,
+                    IsAvailable = car.IsAvailable,
+                    Image = car.Image,
+                    LocationId = car.Location_Id
+                }).ToList();
+
+
+            return new GeneralResponse()
+
+            {
+                IsPass = true,
+                Message = carDTO
+
+            };
+
+        }
+
+        }
     }
-}
