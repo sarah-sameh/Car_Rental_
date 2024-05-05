@@ -31,7 +31,6 @@ namespace Car_Rental.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -70,7 +69,6 @@ namespace Car_Rental.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
@@ -101,10 +99,10 @@ namespace Car_Rental.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d7c03867-15d9-4dcd-9853-7845af0bcdb4",
+                            Id = "9b602915-563a-4ba6-b400-db0879f7583f",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "5393d6b5-710e-45a9-8bf6-92a9851b0174",
+                            ConcurrencyStamp = "013b74b6-df0a-49d9-ab75-e7dbf8852e09",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -113,16 +111,16 @@ namespace Car_Rental.Migrations
                             PasswordHash = "Doe",
                             PhoneNumber = "+1-555-1234",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a0573eef-4c39-4235-83ca-97ba7a928565",
+                            SecurityStamp = "5b25d181-e696-497a-bc03-b73c727280b6",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
                         new
                         {
-                            Id = "714f79e8-3315-403c-a908-05251eeeab72",
+                            Id = "a7e3d0a3-0030-4688-bca6-f873d23d7727",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "9b28a06c-cf5a-459c-87ab-54cc3fc6c707",
+                            ConcurrencyStamp = "cf12648f-7164-4ac9-b7db-4755262e631b",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -131,16 +129,16 @@ namespace Car_Rental.Migrations
                             PasswordHash = "Doe",
                             PhoneNumber = "+1-555-5678",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "12f922d6-4d9e-44d7-b3e2-da655ece7835",
+                            SecurityStamp = "97d371d1-8465-4059-9114-c32d2113fcf7",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         },
                         new
                         {
-                            Id = "f90bb19b-43c6-4f23-8a77-c784b6771935",
+                            Id = "4350afdb-896f-4772-9056-81c5fa8c98a9",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "736d11ea-114f-417c-8456-91e06a4791d7",
+                            ConcurrencyStamp = "1eba4df8-8f06-43d7-9849-4c64d1918e7d",
                             Email = "user3@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -149,16 +147,16 @@ namespace Car_Rental.Migrations
                             PasswordHash = "Smith",
                             PhoneNumber = "+1-555-9012",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3224f74e-188a-4d31-8528-091a75c16801",
+                            SecurityStamp = "bc5e01b9-7711-44a8-92b6-e4dcadbfa8fd",
                             TwoFactorEnabled = false,
                             UserName = "user3@example.com"
                         },
                         new
                         {
-                            Id = "5b25fc7a-aee4-4194-9538-910d5e524f96",
+                            Id = "fbfe93a9-5f3b-4fb3-92c3-b385a07ec83c",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "d371c6da-8002-4615-8de2-a580ba70082f",
+                            ConcurrencyStamp = "a56c534a-9bd8-49f5-ad08-987937f43f06",
                             Email = "user4@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -167,16 +165,16 @@ namespace Car_Rental.Migrations
                             PasswordHash = "Johnson",
                             PhoneNumber = "+1-555-3456",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0e4b3039-72d0-4b1a-95e1-7063d8e3f83f",
+                            SecurityStamp = "c61bcd16-54df-41e6-b1ba-ff814362aa05",
                             TwoFactorEnabled = false,
                             UserName = "user4@example.com"
                         },
                         new
                         {
-                            Id = "b31af383-db18-4f5a-982e-ce2d0124c59b",
+                            Id = "b0744b48-c510-4653-bfb1-8c99a4744c5a",
                             AccessFailedCount = 0,
                             Address = "egypt",
-                            ConcurrencyStamp = "3237ab2b-b4cb-41e8-9e57-c133e136fa64",
+                            ConcurrencyStamp = "85a53959-bd00-4819-b2b5-3aec99319a6b",
                             Email = "user5@example.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
@@ -185,7 +183,7 @@ namespace Car_Rental.Migrations
                             PasswordHash = "William",
                             PhoneNumber = "+1-555-7890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5ffe076f-ef5b-494c-9f98-ad3b49e60e85",
+                            SecurityStamp = "d75ea387-ab81-409f-bb66-c02b7dd170fe",
                             TwoFactorEnabled = false,
                             UserName = "user5@example.com"
                         });

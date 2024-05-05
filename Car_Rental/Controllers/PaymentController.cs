@@ -1,6 +1,7 @@
 ﻿using Car_Rental.DTOs;
 using Car_Rental.Models;
 using Car_Rental.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace Car_Rental.Controllers
 
 
         [HttpGet]
-        // [Authorize]
+        [Authorize]
         public ActionResult<GeneralResponse> GetAllPayment()
         {
             List<Payment> payments = paymentRepository.getAll().Where(i => i.IsDeleted == false).ToList();
@@ -48,6 +49,8 @@ namespace Car_Rental.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [Authorize]
+
         public ActionResult<GeneralResponse> GetById(string id)
         {
             List<Payment> comments = paymentRepository.getByUserID(id).Where(i => i.IsDeleted == false).ToList();
@@ -106,6 +109,7 @@ namespace Car_Rental.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<GeneralResponse>> AddPayment(PaymentDTO paymentDTO)
         {
 
@@ -149,6 +153,7 @@ namespace Car_Rental.Controllers
 
 
         [HttpPut("{id:int}")]
+        [Authorize]
 
         public ActionResult<GeneralResponse> Edit(int id, PaymentDTO updatedPayment)
         {
@@ -188,6 +193,8 @@ namespace Car_Rental.Controllers
 
 
         [HttpDelete("{id:int}")]
+        [Authorize]
+
 
         public ActionResult<GeneralResponse> Remove(int id)
         {

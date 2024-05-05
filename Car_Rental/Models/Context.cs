@@ -36,7 +36,8 @@ namespace Car_Rental.Models
               Image = "camry.jpg",
               Location_Id = 1, // Assuming the location ID is 1
               IsDeleted = false,
-              userId= "566f46a8-60cc-4fe7-95dc-75f37bc493da"
+              userId = "566f46a8-60cc-4fe7-95dc-75f37bc493da"
+
           },
           new Car
           {
@@ -49,7 +50,7 @@ namespace Car_Rental.Models
               Image = "accord.jpg",
               Location_Id = 2, // Assuming the location ID is 2
               IsDeleted = false,
-              userId= "45e9e4fc-f069-4f6c-8dd1-c"
+              userId = "45e9e4fc-f069-4f6c-8dd1-c"
           }
       // Add more cars here as needed
       );
@@ -86,7 +87,7 @@ namespace Car_Rental.Models
                     Name = "Michael",
                     PasswordHash = "Smith",
                     PhoneNumber = "+1-555-9012",
-                   Address="egypt"
+                    Address="egypt"
                 },
                 new ApplicationUser
                 {
