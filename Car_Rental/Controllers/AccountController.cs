@@ -15,12 +15,19 @@ namespace Car_Rental.Controllers
     {
         private readonly UserManager<ApplicationUser> userManger;
         private readonly IConfiguration configuration;
-
-        public AccountController(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        private readonly RoleManager<IdentityRole> roleManager;
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             this.userManger = userManager;
             this.configuration = configuration;
+            this.roleManager = roleManager;
         }
+
+
+
+
+
+
         [HttpPost("register")]
         // api/account/Register
         public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
@@ -35,16 +42,56 @@ namespace Car_Rental.Controllers
                     PhoneNumber = registerUserDto.PhoneNumber, // Match PhoneNumber property
                     Address = registerUserDto.Address // Match Address property
 
+
                 };
                 IdentityResult Result = await userManger.CreateAsync(user, registerUserDto.Password);
                 if (Result.Succeeded)
                 {
+                    if (registerUserDto.Role.ToUpper() == "ADMIN")
+                    {
+                        await AssignRole(user, "ADMIN");
+                    }
+                    else
+                    {
+                        await AssignRole(user, "CUSTOMER");
+                    }
                     return Ok("Account Created");
                 }
+
+                /////
+                //if (!roleManager.RoleExistsAsync("Admin").Result)
+                //{
+                //    var AdminRole = new IdentityRole
+                //    {
+                //        Name = "Admin"
+                //    };
+                //    roleManager.CreateAsync(AdminRole).Wait();
+                //}
+                //IdentityResult ResultRole = new IdentityResult();
+                //try
+                //{
+                //    ResultRole = await userManger.AddToRoleAsync(user, registerUserDto.Role);
+                //}
+                //catch (Exception e)
+                //{
+                //    //default is customer
+                //    ResultRole = await userManger.AddToRoleAsync(user, "Customer");
+                //}
+
+
+                /////
                 return BadRequest(Result.Errors);
 
             }
             return BadRequest(ModelState);
+        }
+        private async Task AssignRole(ApplicationUser user, string roleName)
+        {
+            if (!await roleManager.RoleExistsAsync(roleName))
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+            await userManger.AddToRoleAsync(user, roleName);
         }
         [HttpPost("login")]
         // api/account/login (UserNAme/Password)

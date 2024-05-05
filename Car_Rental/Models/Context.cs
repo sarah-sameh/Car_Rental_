@@ -68,6 +68,7 @@ namespace Car_Rental.Models
                     PasswordHash = "Doe",
                     PhoneNumber = "+1-555-1234",
                     Address="egypt"
+
                     // Add other properties you want to set
                 },
                 new ApplicationUser

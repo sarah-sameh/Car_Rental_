@@ -2,9 +2,6 @@
 using Car_Rental.Models;
 using Car_Rental.Repository;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace Car_Rental.Controllers
 {
@@ -85,6 +82,7 @@ namespace Car_Rental.Controllers
 
 
         [HttpGet("{id:guid}")]
+
         public ActionResult<GeneralResponse> GetCarsByUserId(string userId)
         {
             List<Car> cars = _carRepository.GetCarsByUserId(userId).Where(c => !c.IsDeleted).ToList();
