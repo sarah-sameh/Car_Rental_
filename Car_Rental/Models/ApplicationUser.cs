@@ -14,5 +14,6 @@ namespace Car_Rental.Models
         public bool IsDeleted { get; set; } = false;
 
 
+
     }
 }

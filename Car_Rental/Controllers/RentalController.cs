@@ -1,7 +1,6 @@
 ﻿using Car_Rental.DTOs;
 using Car_Rental.Models;
 using Car_Rental.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Car_Rental.Controllers
@@ -90,12 +89,12 @@ namespace Car_Rental.Controllers
         {
             rentaltRepository.delete(id);
             rentaltRepository.save();
-           return new GeneralResponse()
+            return new GeneralResponse()
             {
                 IsPass = true,
                 Message = "deleted successfuly"
             };
-           
+
 
         }
 
