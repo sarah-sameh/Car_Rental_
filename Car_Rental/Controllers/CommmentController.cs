@@ -2,6 +2,7 @@
 using Car_Rental.Models;
 using Car_Rental.MyHub;
 using Car_Rental.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -14,13 +15,14 @@ namespace Car_Rental.Controllers
         private readonly ICommentRepository commentRepository;
         private readonly commentHub commentHub;
 
-        public CommentController(ICommentRepository commentRepository,commentHub commentHub)
+        public CommentController(ICommentRepository commentRepository, commentHub commentHub)
         {
             this.commentRepository = commentRepository;
             this.commentHub = commentHub;
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<GeneralResponse> GetAll()
         {
             List<Comments> comments = commentRepository.getAll().Where(i => i.IsDeleted == false).ToList();
@@ -45,6 +47,7 @@ namespace Car_Rental.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public ActionResult<GeneralResponse> Delete(int id)
         {
 
@@ -64,6 +67,7 @@ namespace Car_Rental.Controllers
 
 
         [HttpPut("{id:int}")]
+        [Authorize]
         public ActionResult<GeneralResponse> Update(int id, updateCommentDTO newComment)
         {
 
@@ -91,6 +95,7 @@ namespace Car_Rental.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<GeneralResponse>> Insert(commentDTO commentDto)
         {
 
@@ -115,6 +120,7 @@ namespace Car_Rental.Controllers
 
 
         [HttpGet("{id:guid}")]
+        [Authorize]
         public ActionResult<GeneralResponse> GetByUserId(string id)
         {
             List<Comments> comments = commentRepository.getByUserID(id).Where(i => i.IsDeleted == false).ToList();
