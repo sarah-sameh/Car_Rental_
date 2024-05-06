@@ -54,6 +54,7 @@ namespace Car_Rental
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<IRentalRepository, RentalRepository>();
             builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+            builder.Services.AddScoped<ILocationRepository, LocationRepository>();
             builder.Services.AddScoped<IcarRepository, CarRepository>();
             builder.Services.AddScoped<IMaintenanceRepository, MaintenanceRepository>();
             builder.Services.AddAuthorization(options =>
