@@ -49,11 +49,11 @@ namespace Car_Rental.Controllers
                 {
                     if (registerUserDto.Role.ToUpper() == "ADMIN")
                     {
-                        await AssignRole(user, "ADMIN");
+                        await  userManger.AddToRoleAsync(user, "ADMIN");
                     }
                     else
                     {
-                        await AssignRole(user, "CUSTOMER");
+                        await userManger.AddToRoleAsync(user, "CUSTOMER");
                     }
 
                     return new GeneralResponse { IsPass = true, Message = "Account created successfully" };
