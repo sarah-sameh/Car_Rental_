@@ -16,6 +16,8 @@ namespace Car_Rental.Controllers
         private readonly UserManager<ApplicationUser> userManger;
         private readonly IConfiguration configuration;
         private readonly RoleManager<IdentityRole> roleManager;
+
+
         public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             this.userManger = userManager;
@@ -47,16 +49,25 @@ namespace Car_Rental.Controllers
                 IdentityResult Result = await userManger.CreateAsync(user, registerUserDto.Password);
                 if (Result.Succeeded)
                 {
-                    if (registerUserDto.Role.ToUpper() == "ADMIN")
-                    {
-                        await AssignRole(user, "ADMIN");
-                    }
-                    else
-                    {
-                        await AssignRole(user, "CUSTOMER");
-                    }
+
+
+                    await userManger.AddToRoleAsync(user, "ADMIN");
+
                     return Ok("Account Created");
+
                 }
+
+
+
+
+                //if (registerUserDto.Role.ToUpper() == "ADMIN")
+                //{
+                //    await AssignRole(user, "ADMIN");
+                //}
+                //else
+                //{
+                //    await AssignRole(user, "CUSTOMER");
+                //}
 
                 /////
                 //if (!roleManager.RoleExistsAsync("Admin").Result)

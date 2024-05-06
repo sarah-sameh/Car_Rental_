@@ -22,7 +22,7 @@ namespace Car_Rental.Controllers
 
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ADMIN")]
         public ActionResult<GeneralResponse> GetAllPayment()
         {
             List<Payment> payments = paymentRepository.getAll().Where(i => i.IsDeleted == false).ToList();
