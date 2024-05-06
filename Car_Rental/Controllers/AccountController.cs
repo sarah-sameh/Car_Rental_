@@ -30,7 +30,7 @@ namespace Car_Rental.Controllers
 
         [HttpPost("register")]
         // api/account/Register
-        public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
+        public async Task<ActionResult<GeneralResponse>> Register(RegisterUserDto registerUserDto)
         {
             if (ModelState.IsValid)
             {
@@ -55,8 +55,15 @@ namespace Car_Rental.Controllers
                     {
                         await AssignRole(user, "CUSTOMER");
                     }
-                    return Ok("Account Created");
+
+                    return new GeneralResponse { IsPass = true, Message = "Account created successfully" };
                 }
+                else
+                {
+                    return new GeneralResponse { IsPass = false, Message = "Failed to create account" };
+                }
+
+              
 
                 /////
                 //if (!roleManager.RoleExistsAsync("Admin").Result)
@@ -80,7 +87,7 @@ namespace Car_Rental.Controllers
 
 
                 /////
-                return BadRequest(Result.Errors);
+
 
             }
             return BadRequest(ModelState);

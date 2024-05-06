@@ -36,7 +36,7 @@ namespace Car_Rental
                 options.AddPolicy("MyPolicy",
                     builder =>
                     {
-                        builder.WithOrigins("http://127.0.0.1:5500")
+                        builder.WithOrigins("http://localhost:4200")
                                .AllowAnyMethod()
                                .AllowAnyHeader()
                                .AllowCredentials();
