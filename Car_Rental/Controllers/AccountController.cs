@@ -102,7 +102,7 @@ namespace Car_Rental.Controllers
         }
         [HttpPost("login")]
         // api/account/login (UserNAme/Password)
-        public async Task<IActionResult> Login(LoginDto loginUser)
+        public async Task<ActionResult<GeneralResponse>> Login(LoginDto loginUser)
         {
             if (ModelState.IsValid)
             {
@@ -134,17 +134,22 @@ namespace Car_Rental.Controllers
                         return Ok(new
                         {
                             token = new JwtSecurityTokenHandler().WriteToken(token),
-                            expired = token.ValidTo
+                            expired = token.ValidTo,
+                            ispass= true,
+
 
                         });
 
                     }
                 }
 
-                return Unauthorized("InValid User");
 
             }
-            return BadRequest(ModelState);
+            return new GeneralResponse
+            {
+                IsPass=false,
+                Message="invalid account"
+            };
 
         }
     }
