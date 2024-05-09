@@ -43,10 +43,14 @@ namespace Car_Rental
                     });
             });
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-             .AddEntityFrameworkStores<Context>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                
+                options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
+            }).AddEntityFrameworkStores<Context>().AddDefaultTokenProviders();
             builder.Services.AddSignalR(
             );
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
