@@ -15,11 +15,13 @@ namespace Car_Rental.Controllers
     {
         private readonly UserManager<ApplicationUser> userManger;
         private readonly IConfiguration configuration;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration,SignInManager<ApplicationUser> signInManager)
         {
             this.userManger = userManager;
             this.configuration = configuration;
+            this.signInManager = signInManager;
             this.roleManager = roleManager;
         }
 
@@ -152,5 +154,41 @@ namespace Car_Rental.Controllers
             };
 
         }
+        [HttpPost("reset-password")]
+        // api/account/reset-password
+        public async Task<ActionResult<GeneralResponse>> ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            var user = await userManger.FindByNameAsync(resetPasswordDto.UserName);
+            if (user == null)
+            {
+              
+                return BadRequest(new GeneralResponse { IsPass = false, Message = "User not found." });
+            }
+
+            var signInResult = await signInManager.PasswordSignInAsync(user.UserName, resetPasswordDto.oldPassword, false, lockoutOnFailure: false);
+            if (!signInResult.Succeeded)
+            {
+                // Old password is incorrect
+                return BadRequest(new GeneralResponse { IsPass = false, Message = "Invalid  password." });
+            }
+
+            var Token = await userManger.GeneratePasswordResetTokenAsync(user);
+
+            var result = await userManger.ResetPasswordAsync(user, Token, resetPasswordDto.NewPassword);
+            if (result.Succeeded)
+            {
+                return Ok(new GeneralResponse { IsPass = true, Message = "Password reset successfully." });
+            }
+            else
+            {
+           
+                return BadRequest(new GeneralResponse { IsPass = false, Message = "Failed to reset password." });
+            }
+        }
     }
+
+
+
+
 }
+
