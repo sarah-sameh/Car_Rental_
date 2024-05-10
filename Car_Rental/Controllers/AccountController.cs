@@ -17,7 +17,7 @@ namespace Car_Rental.Controllers
         private readonly IConfiguration configuration;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration,SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager)
         {
             this.userManger = userManager;
             this.configuration = configuration;
@@ -51,7 +51,7 @@ namespace Car_Rental.Controllers
                 {
                     if (registerUserDto.Role.ToUpper() == "ADMIN")
                     {
-                        await  userManger.AddToRoleAsync(user, "ADMIN");
+                        await userManger.AddToRoleAsync(user, "ADMIN");
                     }
                     else
                     {
@@ -65,7 +65,7 @@ namespace Car_Rental.Controllers
                     return new GeneralResponse { IsPass = false, Message = "Failed to create account" };
                 }
 
-              
+
 
                 /////
                 //if (!roleManager.RoleExistsAsync("Admin").Result)
@@ -137,7 +137,7 @@ namespace Car_Rental.Controllers
                         {
                             token = new JwtSecurityTokenHandler().WriteToken(token),
                             expired = token.ValidTo,
-                            ispass= true,
+                            ispass = true,
 
 
                         });
@@ -149,8 +149,8 @@ namespace Car_Rental.Controllers
             }
             return new GeneralResponse
             {
-                IsPass=false,
-                Message="invalid account"
+                IsPass = false,
+                Message = "invalid account"
             };
 
         }
@@ -161,34 +161,36 @@ namespace Car_Rental.Controllers
             var user = await userManger.FindByNameAsync(resetPasswordDto.UserName);
             if (user == null)
             {
-              
+
                 return BadRequest(new GeneralResponse { IsPass = false, Message = "User not found." });
             }
 
             var signInResult = await signInManager.PasswordSignInAsync(user.UserName, resetPasswordDto.oldPassword, false, lockoutOnFailure: false);
-            if (!signInResult.Succeeded)
+            if (signInResult.Succeeded == false)
             {
-                // Old password is incorrect
+
                 return BadRequest(new GeneralResponse { IsPass = false, Message = "Invalid  password." });
-            }
-
-            var Token = await userManger.GeneratePasswordResetTokenAsync(user);
-
-            var result = await userManger.ResetPasswordAsync(user, Token, resetPasswordDto.NewPassword);
-            if (result.Succeeded)
-            {
-                return Ok(new GeneralResponse { IsPass = true, Message = "Password reset successfully." });
             }
             else
             {
-           
-                return BadRequest(new GeneralResponse { IsPass = false, Message = "Failed to reset password." });
+
+                var Token = await userManger.GeneratePasswordResetTokenAsync(user);
+
+                var result = await userManger.ResetPasswordAsync(user, Token, resetPasswordDto.NewPassword);
+                if (result.Succeeded)
+                {
+                    return Ok(new GeneralResponse { IsPass = true, Message = "Password reset successfully." });
+                }
+                else
+                {
+
+                    return BadRequest(new GeneralResponse { IsPass = false, Message = "Failed to reset password." });
+                }
             }
         }
+
+
+
     }
-
-
-
-
 }
 
