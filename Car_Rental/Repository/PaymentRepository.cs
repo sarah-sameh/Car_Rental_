@@ -13,5 +13,7 @@ namespace Car_Rental.Repository
             List<Payment> payments = _context.Payments.Where(u => u.Customer_Id == userId).ToList();
             return payments;
         }
+
+
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Car_Rental.Repository
 {
-    public interface IMaintenanceRepository:IRepository<Maintenance>
+    public interface IMaintenanceRepository : IRepository<Maintenance>
     {
+        public decimal GetMaintenanceCost(int maintenanceId);
     }
 }

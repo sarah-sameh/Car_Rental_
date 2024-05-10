@@ -6,6 +6,14 @@ namespace Car_Rental.Repository
     {
         public MaintenanceRepository(Context context) : base(context)
         {
+
+        }
+        public decimal GetMaintenanceCost(int maintenanceId)
+        {
+            return _context.Maintenance
+                           .Where(m => m.Id == maintenanceId)
+                           .Select(m => m.Cost)
+                           .FirstOrDefault();
         }
     }
 }

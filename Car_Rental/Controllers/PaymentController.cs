@@ -13,18 +13,25 @@ namespace Car_Rental.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IPaymentRepository paymentRepository;
+        private readonly IMaintenanceRepository maintenanceRepository;
 
-        public PaymentController(UserManager<ApplicationUser> userManager, IPaymentRepository paymentRepository)
+        public PaymentController(UserManager<ApplicationUser> userManager, IPaymentRepository paymentRepository, IMaintenanceRepository maintenanceRepository)
         {
             this.userManager = userManager;
             this.paymentRepository = paymentRepository;
+            this.maintenanceRepository = maintenanceRepository;
         }
 
 
         [HttpGet]
         [Authorize]
-        public ActionResult<GeneralResponse> GetAllPayment()
+        public async Task<ActionResult<GeneralResponse>> GetAllPayment()
         {
+            var currentUser = await userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return Unauthorized("User not authenticated.");
+            }
             List<Payment> payments = paymentRepository.getAll().Where(i => i.IsDeleted == false).ToList();
 
             var paymentsWithUserNames = paymentRepository.getAll()
@@ -35,11 +42,14 @@ namespace Car_Rental.Controllers
                   payment.Method,
                   payment.Amount,
                   payment.Customer_Id,
-                  payment.IsDeleted,
+                  CustomerName = currentUser.UserName,
+                  CustomerEmail = currentUser.Email,
+
+                  payment.IsDeleted
               })
               .ToList();
 
-            //return Ok(paymentsWithUserNames);
+
             GeneralResponse response = new GeneralResponse()
             {
                 IsPass = true,
@@ -48,79 +58,66 @@ namespace Car_Rental.Controllers
             return response;
         }
 
-        [HttpGet("{id:guid}")]
+
+
+        [HttpGet("{username}")]
         [Authorize]
-
-        public ActionResult<GeneralResponse> GetById(string id)
+        public ActionResult<GeneralResponse> GetAllByUserName(string username)
         {
-            List<Payment> comments = paymentRepository.getByUserID(id).Where(i => i.IsDeleted == false).ToList();
-
-
-            List<PaymentDTO> paymentDTOs = comments.Select(p => new PaymentDTO
+            var user = userManager.FindByNameAsync(username).Result;
+            if (user == null)
             {
-                Date = p.Date,
-                Method = p.Method,
-                Amount = p.Amount,
-                userId = p.Customer_Id
+                return NotFound($"User '{username}' not found.");
+            }
+            var paymentsWithUserNames = paymentRepository.getAll()
+            .Where(payment => payment.customer.UserName == username)
+            .Select(payment => new
+            {
+                payment.Id,
+                payment.Date,
+                payment.Method,
+                payment.Amount,
 
-            }).ToList();
-
+                CustomerName = payment.customer.UserName,
+                CustomerEmail = payment.customer.Email
+            })
+            .ToList();
             GeneralResponse response = new GeneralResponse()
             {
                 IsPass = true,
-                Message = paymentDTOs
+                Message = paymentsWithUserNames
             };
-
             return response;
         }
 
 
-
-        //[HttpGet("{username}")]
-        //public ActionResult<GeneralResponse> GetAllByUserName(string username)
-        //{
-        //    var user = userManager.FindByNameAsync(username).Result;
-        //    if (user == null)
-        //    {
-        //        return NotFound($"User '{username}' not found.");
-        //    }
-        //    var paymentsWithUserNames = paymentRepository.getAll()
-        //    .Where(payment => payment.customer.UserName == username)
-        //    .Select(payment => new
-        //    {
-        //        payment.Id,
-        //        payment.Date,
-        //        payment.Method,
-        //        payment.Amount,
-
-        //        CustomerName = payment.customer.UserName,
-        //        CustomerEmail = payment.customer.Email
-        //    })
-        //    .ToList();
-        //    GeneralResponse response = new GeneralResponse()
-        //    {
-        //        IsPass = true,
-        //        Message = paymentsWithUserNames
-        //    };
-        //    return response;
-        //}
-
-
-
-
         [HttpPost]
         [Authorize]
+
         public async Task<ActionResult<GeneralResponse>> AddPayment(PaymentDTO paymentDTO)
         {
-
+            var currentUser = await userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return Unauthorized("User not authenticated.");
+            }
             if (ModelState.IsValid)
             {
+
+                var maintenanceCost = maintenanceRepository.GetMaintenanceCost(paymentDTO.MaintenanceId);
+
+
+                var totalAmount = maintenanceCost;
+
                 var payment = new Payment
                 {
                     Date = paymentDTO.Date,
                     Method = paymentDTO.Method,
-                    Amount = paymentDTO.Amount,
-                    Customer_Id = paymentDTO.userId
+                    Amount = totalAmount,
+                    customer = currentUser,
+                    Customer_Id = currentUser.Id,
+
+                    Maintenance = maintenanceRepository.get(paymentDTO.MaintenanceId)
                 };
 
                 paymentRepository.Insert(payment);
@@ -134,7 +131,6 @@ namespace Car_Rental.Controllers
                         payment.Id,
                         payment.Method,
                         payment.Amount
-
                     }
                 };
             }
@@ -143,14 +139,11 @@ namespace Car_Rental.Controllers
                 GeneralResponse localresponse = new GeneralResponse()
                 {
                     IsPass = false,
-                    Message = "Cant Add Payment"
+                    Message = "Can't Add Payment"
                 };
                 return localresponse;
             }
         }
-
-
-
 
         [HttpPut("{id:int}")]
         [Authorize]
@@ -167,10 +160,13 @@ namespace Car_Rental.Controllers
                 };
                 return LocalResponse;
             }
+            Maintenance maintenance = maintenanceRepository.get(updatedPayment.MaintenanceId);
             OldPayment.Date = updatedPayment.Date;
             OldPayment.Method = updatedPayment.Method;
-            OldPayment.Amount = updatedPayment.Amount;
+            //  OldPayment.Amount = updatedPayment.Amount;
+            OldPayment.Amount = maintenance.Cost;
 
+            OldPayment.Maintenance = maintenanceRepository.get(updatedPayment.MaintenanceId);
 
             paymentRepository.Update(OldPayment);
             paymentRepository.save();
@@ -183,7 +179,8 @@ namespace Car_Rental.Controllers
                     OldPayment.Id,
                     OldPayment.Date,
                     OldPayment.Method,
-                    OldPayment.Amount
+                    OldPayment.Amount,
+                    MaintenanceId = OldPayment.Maintenance?.Id
 
                 }
             };
