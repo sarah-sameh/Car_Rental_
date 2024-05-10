@@ -193,8 +193,9 @@ namespace Car_Rental.Controllers
         {
             List<Car> cars = _carRepository.SearchByMode(model);
 
-            List<CarDTO> carDTOs = cars.Select(car => new CarDTO
+            List<CarDTO> carDTO = cars.Select(car => new CarDTO
             {
+                Id=car.Id,
                 Model = car.Model,
                 Make = car.Make,
                 Year = car.Year,
@@ -207,7 +208,7 @@ namespace Car_Rental.Controllers
             return new GeneralResponse()
             {
                 IsPass = true,
-                Message = carDTOs
+                Message = carDTO
             };
 
         }
@@ -224,6 +225,7 @@ namespace Car_Rental.Controllers
             List<CarDTO> carDTO = cars.Skip((page - 1) * pageSize).Take(pageSize)
                 .Select(car => new CarDTO
                 {
+                    Id=car.Id,
                     Model = car.Model,
                     Make = car.Make,
                     Year = car.Year,
