@@ -17,7 +17,10 @@ namespace Car_Rental.Controllers
         private readonly IConfiguration configuration;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager)
+
+
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+
         {
             this.userManger = userManager;
             this.configuration = configuration;
@@ -49,7 +52,7 @@ namespace Car_Rental.Controllers
                 IdentityResult Result = await userManger.CreateAsync(user, registerUserDto.Password);
                 if (Result.Succeeded)
                 {
-                    if (registerUserDto.Role.ToUpper() == "ADMIN")
+     if (registerUserDto.Role.ToUpper() == "ADMIN")
                     {
                         await userManger.AddToRoleAsync(user, "ADMIN");
                     }
@@ -64,6 +67,19 @@ namespace Car_Rental.Controllers
                 {
                     return new GeneralResponse { IsPass = false, Message = "Failed to create account" };
                 }
+
+
+
+
+
+
+                    await userManger.AddToRoleAsync(user, "ADMIN");
+
+                    return Ok("Account Created");
+
+                }
+
+
 
 
 
