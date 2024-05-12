@@ -101,17 +101,16 @@ namespace Car_Rental.Controllers
 
             if (ModelState.IsValid)
             {
-                //Comments comments = new Comments();
+                Comments comments = new Comments();
 
-                //comments.Text = commentDto.Text;
-                //comments.Rating = commentDto.Rating;
-                //comments.IsDeleted = commentDto.IsDeleted;
-                //comments.userId = commentDto.userId;
-                //comments.CarId = commentDto.CarId;
-                //commentRepository.Insert(comments);
-                //commentRepository.save();
+                comments.Text = commentDto.Text;
+                comments.Rating = commentDto.Rating;
+                comments.userId = commentDto.userId;
+                comments.CarId = commentDto.CarId;
+                commentRepository.Insert(comments);
+                commentRepository.save();
 
-                await commentHub.Clients.All.SendAsync("NewComment", commentDto.Text, commentDto.CarId, commentDto.Rating);
+                // await commentHub.Clients.All.SendAsync("NewComment", commentDto.Text, commentDto.CarId, commentDto.Rating);
                 return new GeneralResponse { IsPass = true, Message = "Comment inserted successfully" };
 
             }
@@ -119,7 +118,7 @@ namespace Car_Rental.Controllers
         }
 
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("user/{id:guid}")]
         [Authorize]
         public ActionResult<GeneralResponse> GetByUserId(string id)
         {
@@ -143,7 +142,32 @@ namespace Car_Rental.Controllers
 
             return response;
         }
+
+
+        [HttpGet("{id:int}")]
+        public ActionResult<GeneralResponse>getByCarID(int carID)
+        {
+
+            List<Comments> comments = commentRepository.getByCarID(carID);
+            List<commentDTO> commentDTOs = comments.Select(c => new commentDTO
+            {
+                Text = c.Text,
+                Rating = c.Rating,
+                CarId = c.CarId,
+                userId = c.userId,
+                IsDeleted = c.IsDeleted,
+            }).ToList();
+            return new GeneralResponse()
+            {
+                IsPass = true,
+                Message = commentDTOs
+            };
+
+
+        }
     }
+
+   
 
 
 }

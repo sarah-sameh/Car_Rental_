@@ -10,11 +10,17 @@ namespace Car_Rental.Repository
             
         }
 
+        public List<Comments> getByCarID(int carID)
+        {
+          List<Comments> comments = _context.Comments.Where(c=>c.CarId == carID).ToList();
+            return comments;
+        }
 
         public List<Comments>getByUserID(string userId)
         {
             List<Comments>comments=_context.Comments.Where(u=>u.userId==userId).ToList();
             return comments;
         }
+       
     }
 }
