@@ -19,7 +19,7 @@ namespace Car_Rental.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
 
 
-        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager)
 
         {
             this.userManger = userManager;
@@ -52,7 +52,7 @@ namespace Car_Rental.Controllers
                 IdentityResult Result = await userManger.CreateAsync(user, registerUserDto.Password);
                 if (Result.Succeeded)
                 {
-     if (registerUserDto.Role.ToUpper() == "ADMIN")
+                    if (registerUserDto.Role.ToUpper() == "ADMIN")
                     {
                         await userManger.AddToRoleAsync(user, "ADMIN");
                     }
@@ -67,49 +67,46 @@ namespace Car_Rental.Controllers
                 {
                     return new GeneralResponse { IsPass = false, Message = "Failed to create account" };
                 }
+            }
+            else
+            {
 
-
-
-
-
-
-                    await userManger.AddToRoleAsync(user, "ADMIN");
-
-                    return Ok("Account Created");
-
-                }
-
-
-
-
-
-                /////
-                //if (!roleManager.RoleExistsAsync("Admin").Result)
-                //{
-                //    var AdminRole = new IdentityRole
-                //    {
-                //        Name = "Admin"
-                //    };
-                //    roleManager.CreateAsync(AdminRole).Wait();
-                //}
-                //IdentityResult ResultRole = new IdentityResult();
-                //try
-                //{
-                //    ResultRole = await userManger.AddToRoleAsync(user, registerUserDto.Role);
-                //}
-                //catch (Exception e)
-                //{
-                //    //default is customer
-                //    ResultRole = await userManger.AddToRoleAsync(user, "Customer");
-                //}
-
-
-                /////
-
+                return Ok("Account Created");
 
             }
-            return BadRequest(ModelState);
+
+
+
+
+
+            /////
+            //if (!roleManager.RoleExistsAsync("Admin").Result)
+            //{
+            //    var AdminRole = new IdentityRole
+            //    {
+            //        Name = "Admin"
+            //    };
+            //    roleManager.CreateAsync(AdminRole).Wait();
+            //}
+            //IdentityResult ResultRole = new IdentityResult();
+            //try
+            //{
+            //    ResultRole = await userManger.AddToRoleAsync(user, registerUserDto.Role);
+            //}
+            //catch (Exception e)
+            //{
+            //    //default is customer
+            //    ResultRole = await userManger.AddToRoleAsync(user, "Customer");
+            //}
+
+
+            /////
+
+
         }
+
+
+
         private async Task AssignRole(ApplicationUser user, string roleName)
         {
             if (!await roleManager.RoleExistsAsync(roleName))
@@ -205,8 +202,8 @@ namespace Car_Rental.Controllers
             }
         }
 
-
-
     }
 }
+    
+
 

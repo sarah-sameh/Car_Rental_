@@ -25,7 +25,7 @@ namespace Car_Rental.Controllers
 
         [HttpGet]
         [Authorize("ADMIN")]
-        public ActionResult<GeneralResponse> GetAllPayment()
+        public async Task<ActionResult<GeneralResponse>> GetAllPaymentAsync()
 
         {
             var currentUser = await userManager.GetUserAsync(User);
