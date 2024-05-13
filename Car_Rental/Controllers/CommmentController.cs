@@ -1,6 +1,6 @@
 ﻿using Car_Rental.DTOs;
 using Car_Rental.Models;
-using Car_Rental.MyHub;
+
 using Car_Rental.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +13,12 @@ namespace Car_Rental.Controllers
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository commentRepository;
-        private readonly commentHub commentHub;
+       // private readonly commentHub commentHub;
 
-        public CommentController(ICommentRepository commentRepository, commentHub commentHub)
+        public CommentController(ICommentRepository commentRepository)
         {
             this.commentRepository = commentRepository;
-            this.commentHub = commentHub;
+          //  this.commentHub = commentHub;
         }
 
         [HttpGet]
@@ -145,10 +145,10 @@ namespace Car_Rental.Controllers
 
 
         [HttpGet("{id:int}")]
-        public ActionResult<GeneralResponse>getByCarID(int carID)
+        public ActionResult<GeneralResponse>getByCarID(int id)
         {
 
-            List<Comments> comments = commentRepository.getByCarID(carID);
+            List<Comments> comments = commentRepository.getByCarID(id);
             List<commentDTO> commentDTOs = comments.Select(c => new commentDTO
             {
                 Text = c.Text,
@@ -160,7 +160,7 @@ namespace Car_Rental.Controllers
             return new GeneralResponse()
             {
                 IsPass = true,
-                Message = commentDTOs
+                Message =  commentDTOs
             };
 
 

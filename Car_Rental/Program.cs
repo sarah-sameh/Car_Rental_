@@ -1,6 +1,6 @@
 
 using Car_Rental.Models;
-using Car_Rental.MyHub;
+using Car_Rental;
 using Car_Rental.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -62,6 +62,7 @@ namespace Car_Rental
             builder.Services.AddScoped<ILocationRepository, LocationRepository>();
             builder.Services.AddScoped<IcarRepository, CarRepository>();
             builder.Services.AddScoped<IMaintenanceRepository, MaintenanceRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("ADMIN", policy => policy.RequireRole("ADMIN"));
@@ -193,7 +194,7 @@ namespace Car_Rental
             app.UseCors("MyPolicy");
             app.UseAuthorization();
             app.UseAuthorization();
-            app.MapHub<commentHub>("/commentHub");
+    
 
             app.MapControllers();
 
