@@ -6,6 +6,6 @@ namespace Car_Rental.Repository
     {
         //public void Update(ApplicationUser appUser);
         //public ApplicationUser GetByUserName(string userName);
-        //public ApplicationUser GetById(string appUserId);
+        public ApplicationUser GetById(string appUserId);
     }
 }

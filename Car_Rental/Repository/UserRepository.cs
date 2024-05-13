@@ -6,16 +6,16 @@ namespace Car_Rental.Repository
     {
         //private readonly Context context;
 
-        //public UserRepository(Context _context)
-        //{
-        //    context = _context;
-        //}
+        public UserRepository(Context context):base(context)
+        {
+           
+        }
 
-        //public ApplicationUser GetById(string appUserId)
-        //{
-        //    ApplicationUser user = context.applicationUsers.Find(appUserId);
-        //    return user;
-        //}
+        public ApplicationUser GetById(string appUserId)
+        {
+            ApplicationUser user = _context.ApplicationUsers.Find(appUserId);
+            return user;
+        }
 
         //public ApplicationUser GetByUserName(string userName)
         //{
@@ -28,8 +28,6 @@ namespace Car_Rental.Repository
         //    context.applicationUsers.Update(appUser);
         //    context.SaveChanges();
         //}
-        public UserRepository(Context context) : base(context)
-        {
-        }
+       
     }
 }
