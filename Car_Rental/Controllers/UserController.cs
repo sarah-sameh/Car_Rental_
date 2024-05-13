@@ -3,6 +3,7 @@ using Car_Rental.Models;
 using Car_Rental.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Car_Rental.Controllers
 {
@@ -17,10 +18,11 @@ namespace Car_Rental.Controllers
         }
 
 
-        [HttpGet("{id:guid}")]
-        public ActionResult<GeneralResponse> getUserByID(string id)
+        [HttpGet]
+        public ActionResult<GeneralResponse> getCurrentUser()
         {
-            ApplicationUser user = userRepository.GetById(id);
+            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ApplicationUser user = userRepository.GetById(userId);
             if (user == null)
             {
                 return new GeneralResponse{

@@ -5,6 +5,7 @@ using Car_Rental.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
 namespace Car_Rental.Controllers
 {
@@ -13,30 +14,41 @@ namespace Car_Rental.Controllers
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository commentRepository;
-       // private readonly commentHub commentHub;
+        private readonly IcarRepository carRepository;
+        private readonly IUserRepository userRepository;
 
-        public CommentController(ICommentRepository commentRepository)
+        // private readonly commentHub commentHub;
+
+        public CommentController(ICommentRepository commentRepository, IcarRepository carRepository, IUserRepository userRepository)
         {
             this.commentRepository = commentRepository;
-          //  this.commentHub = commentHub;
+            this.carRepository = carRepository;
+            this.userRepository = userRepository;
+            //  this.commentHub = commentHub;
         }
 
         [HttpGet]
-        [Authorize]
         public ActionResult<GeneralResponse> GetAll()
         {
             List<Comments> comments = commentRepository.getAll().Where(i => i.IsDeleted == false).ToList();
 
 
-            List<commentDTO> commentDTOs = comments.Select(c => new commentDTO
-            {
-                Text = c.Text,
-                Rating = c.Rating,
-                CarId = c.CarId,
-                userId = c.userId,
-                IsDeleted = c.IsDeleted,
-            }).ToList();
 
+            List<commentDTO> commentDTOs = comments.Select(c =>
+            {
+                Car car = carRepository.get(c.CarId);
+                ApplicationUser user = userRepository.GetById(c.userId);
+                return new commentDTO
+                {
+                    Text = c.Text,
+                    Rating = c.Rating,
+                    CarId = c.CarId,
+                    userName = user.UserName,
+                    userID = c.userId,
+                    IsDeleted = c.IsDeleted,
+
+                };
+            }).ToList();
             GeneralResponse response = new GeneralResponse()
             {
                 IsPass = true,
@@ -98,6 +110,8 @@ namespace Car_Rental.Controllers
         [Authorize]
         public async Task<ActionResult<GeneralResponse>> Insert(commentDTO commentDto)
         {
+            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ApplicationUser user = userRepository.GetById(userId);
 
             if (ModelState.IsValid)
             {
@@ -105,7 +119,7 @@ namespace Car_Rental.Controllers
 
                 comments.Text = commentDto.Text;
                 comments.Rating = commentDto.Rating;
-                comments.userId = commentDto.userId;
+  
                 comments.CarId = commentDto.CarId;
                 commentRepository.Insert(comments);
                 commentRepository.save();
@@ -124,13 +138,12 @@ namespace Car_Rental.Controllers
         {
             List<Comments> comments = commentRepository.getByUserID(id).Where(i => i.IsDeleted == false).ToList();
 
-
             List<commentDTO> commentDTOs = comments.Select(c => new commentDTO
             {
                 Text = c.Text,
                 Rating = c.Rating,
                 CarId = c.CarId,
-                userId = c.userId,
+                userID = c.userId,
                 IsDeleted = c.IsDeleted,
             }).ToList();
 
@@ -143,31 +156,35 @@ namespace Car_Rental.Controllers
             return response;
         }
 
-
         [HttpGet("{id:int}")]
-        public ActionResult<GeneralResponse>getByCarID(int id)
+        public ActionResult<GeneralResponse> getByCarID(int id)
         {
-
             List<Comments> comments = commentRepository.getByCarID(id);
-            List<commentDTO> commentDTOs = comments.Select(c => new commentDTO
+            List<commentDTO> commentDTOs = comments.Select(c =>
             {
-                Text = c.Text,
-                Rating = c.Rating,
-                CarId = c.CarId,
-                userId = c.userId,
-                IsDeleted = c.IsDeleted,
+                Car car = carRepository.get(c.CarId);
+                ApplicationUser user = userRepository.GetById(c.userId);
+                return new commentDTO
+                {
+                    Text = c.Text,
+                    Rating = c.Rating,
+                    CarId = c.CarId,
+                    userID = c.userId,
+                    userName = user != null ? user.UserName : "Unknown", // Handle null user
+                    IsDeleted = c.IsDeleted,
+                };
             }).ToList();
+
             return new GeneralResponse()
             {
                 IsPass = true,
-                Message =  commentDTOs
+                Message = commentDTOs
             };
-
-
         }
+
+
+
+
+
     }
-
-   
-
-
 }
