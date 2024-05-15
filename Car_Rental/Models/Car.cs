@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Car_Rental.Models
 {
-    public class Car: ISoftDeletable
+    public class Car : ISoftDeletable
     {
         public int Id { get; set; }
         public string? Model { get; set; }

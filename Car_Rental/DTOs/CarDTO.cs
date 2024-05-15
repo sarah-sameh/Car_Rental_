@@ -10,6 +10,8 @@
         public bool IsAvailable { get; set; }
         public string Image { get; set; }
         public int LocationId { get; set; }
+        public string userID { get; set; }
+
 
     }
 }

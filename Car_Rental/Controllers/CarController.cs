@@ -125,7 +125,8 @@ namespace Car_Rental.Controllers
                     FuelType = carDTO.FuelType,
                     IsAvailable = carDTO.IsAvailable,
                     Image = carDTO.Image,
-                    Location_Id = carDTO.LocationId
+                    Location_Id = carDTO.LocationId,
+                    userId = carDTO.userID
                 };
 
                 _carRepository.Insert(car);
@@ -195,7 +196,7 @@ namespace Car_Rental.Controllers
 
             List<CarDTO> carDTO = cars.Select(car => new CarDTO
             {
-                Id=car.Id,
+                Id = car.Id,
                 Model = car.Model,
                 Make = car.Make,
                 Year = car.Year,
@@ -225,7 +226,7 @@ namespace Car_Rental.Controllers
             List<CarDTO> carDTO = cars.Skip((page - 1) * pageSize).Take(pageSize)
                 .Select(car => new CarDTO
                 {
-                    Id=car.Id,
+                    Id = car.Id,
                     Model = car.Model,
                     Make = car.Make,
                     Year = car.Year,
@@ -246,5 +247,5 @@ namespace Car_Rental.Controllers
 
         }
 
-        }
     }
+}
